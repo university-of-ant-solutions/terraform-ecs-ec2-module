@@ -1,12 +1,3 @@
-locals {
-  ecs_cluster_name      = "${var.ecs_cluster_name}-${var.environment}-${var.service_name}"
-  security_group_ecs    = "${var.security_group_ecs}-${var.environment}-${var.service_name}"
-  key_pair              = "${var.key_pair}-${var.environment}-${var.service_name}"
-  autoscaling_group     = "${var.autoscaling_group}-${var.environment}-${var.service_name}"
-  ecr_repository_name  = "${var.ecr_repository_name}-${var.service_name}"
-  launch_configuration_name_prefix = "${var.launch_configuration_name_prefix}-${var.environment}-${var.service_name}"
-}
-
 resource "aws_ecr_repository" "ecr_repository" {
   name = "${local.ecr_repository_name}"
   lifecycle {
@@ -14,24 +5,24 @@ resource "aws_ecr_repository" "ecr_repository" {
   }
 }
 
-resource "aws_ecs_cluster" "cluster" {
+resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${local.ecs_cluster_name}"
 }
 
 resource "aws_key_pair" "ecs_instance_key_pair" {
-  key_name = "${local.key_pair}"
-  public_key = "${file("${path.module}/templates/id_rsa.pub")}"
+  key_name    = "${local.key_pair}"
+  public_key  = "${file("${path.module}/templates/id_rsa.pub")}"
 }
 
 data "template_file" "user_data" {
-  template = "${file("${path.module}/templates/user_data.sh")}"
+  template      = "${file("${path.module}/templates/user_data.sh")}"
 
   vars {
     cluster_name = "${local.ecs_cluster_name}"
   }
 }
 
-resource "aws_instance" "web" {
+resource "aws_instance" "instance" {
   ami                           = "${lookup(var.amis, var.region)}"
   subnet_id                     = "${var.subnets[0]}"
   instance_type                 = "${var.instance_type}"
@@ -48,6 +39,6 @@ resource "aws_instance" "web" {
   }
 
   tags {
-    Name = "${local.autoscaling_group}"
+    Name = "${local.launch_configuration_name_prefix}"
   }
 }

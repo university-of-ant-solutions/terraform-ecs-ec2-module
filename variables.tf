@@ -1,6 +1,6 @@
 variable "environment" {}
 
-variable "version" {}
+variable "app_version" {}
 
 variable "ecr_repository_name" {
   default = "ecr-repository-as1"
@@ -29,7 +29,7 @@ variable "docker_storage_size" {
 }
 
 variable "instance_type" {
-  default = "t2.nano"
+  default = "t2.micro"
 }
 
 variable "subnets" {
@@ -46,17 +46,21 @@ variable "amis" {
   type = "map"
   description = "Which AMI to spawn. Defaults to the AWS ECS optimized images."
   default = {
-    "us-east-2" = "ami-1c002379",
-    "us-east-1" = "ami-9eb4b1e5",
-    "us-west-2" = "ami-1d668865",
-    "us-west-1" = "ami-4a2c192a",
-    "eu-west-2" = "ami-cb1101af",
-    "eu-west-1" = "ami-8fcc32f6",
-    "eu-central-1" = "ami-0460cb6b",
-    "ap-northeast-1" = "ami-b743bed1",
-    "ap-southeast-2" = "ami-c1a6bda2",
-    "ap-southeast-1" = "ami-ca3762a9", # *
-    "ca-central-1" = "ami-b677c9d2"
+    "us-east-2"       = "ami-64300001",
+    "us-east-1"       = "ami-aff65ad2",
+    "us-west-2"       = "ami-40ddb938",
+    "us-west-1"       = "ami-69677709",
+    "eu-west-3"	      = "ami-250eb858",  
+    "eu-west-2"       = "ami-2218f945",
+    "eu-west-1"       = "ami-2d386654",
+    "eu-central-1"    = "ami-9fc39c74",
+    "ap-northeast-2"	= "ami-9d56f9f3",
+    "ap-northeast-1"  = "ami-a99d8ad5",
+    "ap-southeast-2"  = "ami-efda148d",
+    "ap-southeast-1"  = "ami-846144f8", # *
+    "ca-central-1"    = "ami-897ff9ed",
+    "ap-south-1"	    = "ami-72edc81d",
+    "sa-east-1"       = "ami-4a7e2826"
   }
 }
 

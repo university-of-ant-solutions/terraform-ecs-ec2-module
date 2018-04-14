@@ -1,9 +1,5 @@
-output "public_dns" {
-  value = "${aws_instance.web.public_dns}"
-}
-
 output "cluster_id" {
-  value = "${aws_ecs_cluster.cluster.id}"
+  value = "${aws_ecs_cluster.ecs_cluster.id}"
 }
 
 output "repository_url" {
@@ -11,9 +7,13 @@ output "repository_url" {
 }
 
 output "cluster_ec2_private_dns" {
-  value = "${aws_instance.web.private_dns}"
+  value = "${aws_instance.instance.private_dns}"
+}
+
+output "public_dns" {
+  value = "${aws_instance.instance.public_dns}"
 }
 
 output "cluster_ec2_public_dns" {
-  value = "${aws_instance.web.public_dns}"
+  value = "${aws_instance.instance.public_dns}"
 }
